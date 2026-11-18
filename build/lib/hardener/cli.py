@@ -269,5 +269,43 @@ def compare(before, after):
 
     console.print(table)
 
+@cli.group()
+def charts():
+    """Genera gráficos PNG a partir de reportes XLSX de DockerHard."""
+    pass
+
+
+@charts.command("static")
+@click.option("--input", "input_path", required=True, type=click.Path(exists=True, dir_okay=False), help="Reporte XLSX de análisis estático.")
+@click.option("--output-dir", required=True, type=click.Path(file_okay=False), help="Directorio para los gráficos PNG.")
+def charts_static(input_path, output_dir):
+    """Genera gráficos de severidad, fuentes y reglas de Dockerfile."""
+    from argparse import Namespace
+    from hardener.charts import run_static
+    run_static(Namespace(input=input_path, output_dir=output_dir))
+
+
+@charts.command("dynamic")
+@click.option("--input", "input_path", required=True, type=click.Path(exists=True, dir_okay=False), help="Reporte XLSX de análisis de imagen.")
+@click.option("--output-dir", required=True, type=click.Path(file_okay=False), help="Directorio para los gráficos PNG.")
+def charts_dynamic(input_path, output_dir):
+    """Genera gráficos de severidad y paquetes vulnerables."""
+    from argparse import Namespace
+    from hardener.charts import run_dynamic
+    run_dynamic(Namespace(input=input_path, output_dir=output_dir))
+
+
+@charts.command("compare")
+@click.option("--before", required=True, type=click.Path(exists=True, dir_okay=False), help="Reporte XLSX antes del hardening.")
+@click.option("--after", required=True, type=click.Path(exists=True, dir_okay=False), help="Reporte XLSX después del hardening.")
+@click.option("--case", required=True, help="Nombre del caso experimental para el gráfico IMH.")
+@click.option("--output-dir", required=True, type=click.Path(file_okay=False), help="Directorio para los gráficos PNG.")
+def charts_compare(before, after, case, output_dir):
+    """Genera gráficos comparativos por severidad e IMH."""
+    from argparse import Namespace
+    from hardener.charts import run_compare
+    run_compare(Namespace(before=before, after=after, case=case, output_dir=output_dir))
+
+
 if __name__ == '__main__':
     cli()
