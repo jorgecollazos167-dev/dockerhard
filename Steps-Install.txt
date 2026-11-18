@@ -1,0 +1,25 @@
+//install
+
+- python3 -m venv venv
+- source venv/bin/activate
+- pip install -r requirements.txt
+- pip install -e .
+
+//Limpiar entorno venv
+
+- deactivate
+- rm -rf venv
+- sudo apt install python3-venv
+
+//Use Commands
+
+- dockerhard scan --file Dockerfile
+- dockerhard scan --image juego:latest
+- dockerhard scan --file dockerfiles/test/Dockerfile.insecure
+- dockerhard scan --file dockerfiles/test/Dockerfile.insecure --output reports/dockerfile-static.xlsx
+- dockerhard scan --image pygame-game:latest --limit 20 --output reports/image-scan.xlsx
+
+
+//Run python-Games
+Construir imagen a partir del Dockerfile
+    - docker build -t pygame-game .

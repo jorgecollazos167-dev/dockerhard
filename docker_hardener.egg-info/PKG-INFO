@@ -1,0 +1,11 @@
+Metadata-Version: 2.4
+Name: docker-hardener
+Version: 0.1.0
+Summary: CLI para análisis y hardening de imágenes Docker en entornos de videojuegos Linux
+Author: Jorge Collazos
+Requires-Dist: click
+Requires-Dist: rich
+Requires-Dist: docker
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: summary
